@@ -1,3 +1,5 @@
 useDynLib(gbra)
-exportPattern("^[[:alpha:]]+")
-importFrom(Rcpp, evalCpp)
+export(gen.pca)
+export(color.clust)
+export(load.legend)
+export(select.genomes)

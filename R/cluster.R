@@ -4,7 +4,7 @@ color.clust<-function(gen.hclust, g.ids, colors, sep){
   return(dnd)
 }
 
-color.dnd<-function(node,g.ids, colors, sep){
+color.dnd<-function(node, g.ids, colors, sep){
   if(is.leaf(node)){
     a<-attributes(node)
     label<-attr(node,"label")

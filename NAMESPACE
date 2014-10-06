@@ -1,4 +1,3 @@
-guseDynLib(gbra)
 export(gen.pca)
 export(color.clust)
 export(load.legend)

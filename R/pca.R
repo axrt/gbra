@@ -12,6 +12,7 @@ gen.pca<-function(df, legend, g.ids, sep, var.axes=FALSE, scale.=FALSE, circle=T
   }
   require(ggbiplot)
   
+  colnames(df)<-legend$legend.name
   pca<-prcomp(df,center=TRUE,scale.=scale.) 
   g <- ggbiplot(pca, obs.scale = 1, var.scale = 1, groups = clip.legend(row.names(df), g.ids, legend, sep), ellipse = TRUE,circle =circle,var.axes = var.axes,...)
   g <- g + scale_color_discrete(name = '')
@@ -20,7 +21,8 @@ gen.pca<-function(df, legend, g.ids, sep, var.axes=FALSE, scale.=FALSE, circle=T
 }
 
 
-kmeans.pca<-function(){
+kmeans.pca<-function(df, legend, g.ids, sep, var.axes=FALSE, scale.=FALSE, circle=TRUE, ...){
+  
   
   
   

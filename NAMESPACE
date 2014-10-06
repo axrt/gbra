@@ -1,5 +1,6 @@
-useDynLib(gbra)
+guseDynLib(gbra)
 export(gen.pca)
 export(color.clust)
 export(load.legend)
 export(select.genomes)
+export(load.hits)

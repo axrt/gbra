@@ -20,6 +20,11 @@ gen.pca<-function(df, legend, g.ids, sep, var.axes=FALSE, scale.=FALSE, circle=T
 }
 
 
+kmeans.pca<-function(){
+  
+  
+  
+}
 
 #do not export
 clip.legend<-function(node, g.ids, legend, sep){

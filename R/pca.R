@@ -1,6 +1,7 @@
 gen.pca<-function(df, legend, g.ids, sep, trim.names=20, var.axes=FALSE, scale.=FALSE, circle=TRUE, ...){
   check.ggbiplot.loaded()
   groups<-clip.legend(row.names(df),g.ids = g.ids,legend = legend,sep = sep)
+  print(groups)
   colnames(df)<-legend$legend.name
   g<-nice.pca(df = df,legend = legend, groups = groups, var.axes = var.axes, scale. = scale., circle = circle, ... )
   return(g)
@@ -30,7 +31,7 @@ clip.legend<-function(node, g.ids, legend, sep){
     
     val<-as.numeric(split[[1]][1])
     if(val %in% g.ids){
-      return(legend[val,1])
+      return(legend[match(x=val,table = legend[,2]),1])
     }else{
       return(NULL)  
     }

@@ -9,8 +9,8 @@ color.dnd<-function(node, g.ids, colors, sep){
     a<-attributes(node)
     label<-attr(node,"label")
     attr(node,"nodePar")<-c(a$nodePar,lab.col=col)
-    attr(node,"nodePar")<-list(lab.col=colors[match(strsplit(x = label,split = sep)[[1]][1],g.ids)])
+    cls<-colors[match(strsplit(x = label,split = sep)[[1]][1],g.ids)]
+    attr(node,"nodePar")<-list(lab.col=cls,col=cls,pch=15)
   }
   return(node)
 }
-

@@ -1,8 +1,8 @@
 logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, cut=0.5){
   
   #implement checks later
-  working.table<-data[grepl(pattern = paste("\\b[",org1,",",org2,"]X",sep = "",collapse = ""),x = rownames(master.table.5),perl = TRUE),c(-org1,-org2)]
-  working.table$cluster<-grepl(pattern = paste("\\b[",org2,"]X",sep = "",collapse = ""),x = rownames(master.table.5.3x6),perl = TRUE)
+  working.table<-data[grepl(pattern = paste("\\b[",org1,",",org2,"]X",sep = "",collapse = ""),x = rownames(data),perl = TRUE),c(-org1,-org2)]
+  working.table$cluster<-grepl(pattern = paste("\\b[",org2,"]X",sep = "",collapse = ""),x = rownames(data),perl = TRUE)
   
   f<-paste("cluster ~",paste(colnames(working.table[1:ncol(working.table)-1]),collapse = "+"))
   with(data = working.table, expr = message(paste("Using formula:",f)))

@@ -23,6 +23,8 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   
   glm.probs.groups<-sapply(glm.probs,function(i){if(i>=cut){return(TRUE)}else{return(FALSE)}})
   glm.table<-table(glm.probs.groups,working.table$cluster)
+  message("Contigency table:")
+  print(glm.table)
   message(paste("TRUE POSITIVE RATIO:",(glm.table[1,1]+glm.table[2,2])/sum(glm.table)))
   
   cross<-data.frame(cluster=working.table$cluster,probs=glm.probs)

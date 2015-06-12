@@ -20,3 +20,24 @@ connect.derby<-function(db, derby.jar="derby.jar", usr="APP", pwd="gblaster"){
   conn <- dbConnect(drv, paste("jdbc:derby:",db,";", sep = ""), usr, pwd)
   return(list(drv=drv,conn=conn))
 }
+
+#' Reads and returns the genome legend from the database.
+#' 
+#' @param \code{conn} connection to the gBLASTer database
+#' @param \code{out.file} file to save the legend
+#' @examples
+#' conn<-connect.derby(db, derby.jar=derby.lib, create=TRUE, usr="gblaster", pwd="gblaster")
+#' save.legend(conn$conn, "legend.txt")
+#' 
+save.legend<-function(conn, out.file){
+  if (!require("dplyr")){
+    install.packages("dplyr")
+  }
+  legend<-dbGetQuery(conn, "select * from genomes")
+  legend<- legend %>% select(ID_GENOMES,NAME)
+  write.table(legend, file = out.file, quote = FALSE, sep = "\t", row.names = FALSE)
+  return(legend)
+}
+
+
+

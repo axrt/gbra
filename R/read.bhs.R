@@ -21,7 +21,7 @@ read.bhs<-function(bh.folder, ext=".short", sep="_"){
   
 }
 
-#' Reads a processed best hit file for a pair of genomes given (see params)
+#' Reads a processed best hit file for a pair of genomes given (see params).
 #' Will install dplyr, tidyr and data.table if not avaliable yet
 #' 
 #' @param \code{qgen.id} query genome id

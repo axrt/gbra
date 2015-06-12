@@ -1,5 +1,13 @@
-
-
+#' Reads best hit files from the given folder and extracts a hit matrix (non-normalized)
+#' 
+#' @param \code{bh.folder} that contains the shortened bh files
+#' @param \code{ext} shortened files extension, default ".short"
+#' @param \code{sep} separator symbol(s) that split the file names in query and target genomes
+#' @return a data.frame representation of the hit matrix where rows are orfs and columns are target genomes
+#' @example \code{
+#' bh.folder<-"gBLASTer/bh"
+#' head(test.table<-read.bhs(bh.folder = bh.folder))
+#' }
 read.bhs<-function(bh.folder, ext=".short", sep="_"){
   
   bh.files<-list.files(path = bh.folder, pattern = ext)

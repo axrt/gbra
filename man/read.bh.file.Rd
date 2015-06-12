@@ -2,7 +2,7 @@
 % Please edit documentation in R/read.bhs.R
 \name{read.bh.file}
 \alias{read.bh.file}
-\title{Reads a processed best hit file for a pair of genomes given (see params)
+\title{Reads a processed best hit file for a pair of genomes given (see params).
 Will install dplyr, tidyr and data.table if not avaliable yet}
 \usage{
 read.bh.file(qgen.id, tgen.id, bh.folder, ending = "80.0.short", sep = "_",
@@ -25,7 +25,7 @@ read.bh.file(qgen.id, tgen.id, bh.folder, ending = "80.0.short", sep = "_",
 a plain data.table representation of the file with "QUERY_ORF_ID", "COMULATIVE_BITSCORE", "ID_QUERY_GENOME" and "ID_TARGET_GENOME"
 }
 \description{
-Reads a processed best hit file for a pair of genomes given (see params)
+Reads a processed best hit file for a pair of genomes given (see params).
 Will install dplyr, tidyr and data.table if not avaliable yet
 }
 \examples{

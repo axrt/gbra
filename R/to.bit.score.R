@@ -3,7 +3,7 @@
 #' @param \code{lambda} parameter, default 0.267 (as estimated by BLAST of 06.17.2015)
 #' @param \code{kappa} parameter, default 0.041 (as estimated by BLAST of 06.17.2015)
 #' @return \code{bit score} for the given raw score and parameters
-#' @example
+#' @examples
 #' > to.bit.score(1263)
 #' [1] 491.1153
 to.bit.score<-function(raw.score, lambda=0.267, kappa=0.041){

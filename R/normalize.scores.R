@@ -1,7 +1,7 @@
 #' Use to normalize the bitscore values in the RAW(!) table from read.bhs()
 #'@param \code{raw.df} data.frame from read.bhs(); keep in mind that read.bhs() returns a data.table, not data.frame, so conversion is due
 #'@return \code{data.frame} with bit score values converted to [0,1] scale
-#'@example
+#'@examples
 #'master.table.raw<-read.bhs(bh.folder = "/gBLASTer/bh")
 #'master.table.raw<-as.data.frame(master.table.raw)
 #'master.table.norm<- normalize.scores(master.table.raw)

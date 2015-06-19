@@ -35,22 +35,23 @@ read.bhs<-function(bh.folder, ext=".short", sep="_"){
 #' system.time(all.tables<-lapply(genome.ids, function(i){return(read.short.file(i[1],i[3],bh.folder))}))
 #' 
 read.bh.file<-function(qgen.id, tgen.id, bh.folder, ending="80.0.short", sep="_", margin="VS"){
-  if(!require("plyr")){
-    install.packages("plyr")
-  }
-  if(!require("dplyr")){
-    install.packages("dplyr")
-  }
   if(!require("tidyr")){
     install.packages("tidyr")
   }
   if(!require("data.table")){
     install.packages("data.table")
   }
+  if(!require("plyr")){
+    install.packages("plyr")
+  }
+  if(!require("dplyr")){
+    install.packages("dplyr")
+  }
   input<-paste(bh.folder,paste(qgen.id, margin, tgen.id, ending, sep = sep),sep = "/")
   message(paste("Reading", input))
   table.bh<-fread(input = input, showProgress = TRUE,
-                     sep = "\t", header = TRUE, stringsAsFactors = FALSE, data.table = TRUE, ,select=c("QUERY_ORF_ID", "COMULATIVE_BITSCORE")) %>%
+                     sep = "\t", header = TRUE, stringsAsFactors = FALSE, data.table = TRUE, ,select=c("QUERY_ORF_ID", "COMULATIVE_BITSCORE")) %>% 
+    data.frame() %>%
     mutate(ID_QUERY_GENOME=qgen.id, ID_TARGET_GENOME=tgen.id)
   
   return(table.bh)

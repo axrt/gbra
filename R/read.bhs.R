@@ -50,8 +50,7 @@ read.bh.file<-function(qgen.id, tgen.id, bh.folder, ending="80.0.short", sep="_"
   input<-paste(bh.folder,paste(qgen.id, margin, tgen.id, ending, sep = sep),sep = "/")
   message(paste("Reading", input))
   table.bh<-fread(input = input, showProgress = TRUE,
-                     sep = "\t", header = TRUE, stringsAsFactors = FALSE, data.table = TRUE, ,select=c("QUERY_ORF_ID", "COMULATIVE_BITSCORE")) %>% 
-    data.frame() %>%
+                     sep = "\t", header = TRUE, stringsAsFactors = FALSE, data.table = TRUE, select=c("QUERY_ORF_ID", "COMULATIVE_BITSCORE")) %>% 
     mutate(ID_QUERY_GENOME=qgen.id, ID_TARGET_GENOME=tgen.id)
   
   return(table.bh)

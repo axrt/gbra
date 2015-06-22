@@ -6,7 +6,7 @@
 Will install dplyr, tidyr and data.table if not avaliable yet}
 \usage{
 read.bh.file(qgen.id, tgen.id, bh.folder, ending = "80.0.short", sep = "_",
-  margin = "VS")
+  margin = "VS", bit.score.cutoff = 80)
 }
 \arguments{
 \item{\code{qgen.id}}{query genome id}
@@ -20,6 +20,8 @@ read.bh.file(qgen.id, tgen.id, bh.folder, ending = "80.0.short", sep = "_",
 \item{\code{sep}}{specific character that separates the genome ids and the margin, default "_"}
 
 \item{\code{margin}}{a margin symbol that separates the geniome ids, default "VS"}
+
+\item{\code{bit.score.cutoff}}{a minimal cutoff bit score for a hit to be considered, default=80}
 }
 \value{
 a plain data.table representation of the file with "QUERY_ORF_ID", "COMULATIVE_BITSCORE", "ID_QUERY_GENOME" and "ID_TARGET_GENOME"

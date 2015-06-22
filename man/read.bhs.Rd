@@ -4,7 +4,7 @@
 \alias{read.bhs}
 \title{Reads best hit files from the given folder and extracts a hit matrix (non-normalized)}
 \usage{
-read.bhs(bh.folder, ext = ".short", sep = "_")
+read.bhs(bh.folder, ext = ".short", sep = "_", bit.score.cutoff = 80)
 }
 \arguments{
 \item{\code{bh.folder}}{that contains the shortened bh files}
@@ -12,6 +12,8 @@ read.bhs(bh.folder, ext = ".short", sep = "_")
 \item{\code{ext}}{shortened files extension, default ".short"}
 
 \item{\code{sep}}{separator symbol(s) that split the file names in query and target genomes}
+
+\item{\code{bit.score.cutoff}}{a minimal cutoff bit score for a hit to be considered, default=80}
 }
 \value{
 a data.frame representation of the hit matrix where rows are orfs and columns are target genomes

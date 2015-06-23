@@ -9,7 +9,7 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   
   f<-paste("cluster ~",paste(colnames(working.table[1:ncol(working.table)-1]),collapse = "+"))
   with(data = working.table, expr = message(paste("Using formula:",f)))
-  glm.fit<-glm(formula = f, data=working.table, family=binomial)
+  glm.fit<-glm(formula = f, data=working.table, family="binomial")
   print(summary(glm.fit))
   message("Reducing Model ...")
   glm.fit<-step(glm.fit)

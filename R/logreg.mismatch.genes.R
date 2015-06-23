@@ -1,5 +1,7 @@
 logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, cut=0.5){
-  
+  if(!require("boot")){
+    install.packages("boot")
+  }
   #implement checks later
   working.table<-data[grepl(pattern = paste("\\b[",org1,",",org2,"]X",sep = "",collapse = ""),x = rownames(data),perl = TRUE),]
   working.table<-working.table[,c(-which(colnames(working.table)%in%paste("X",org1,sep="",collapse = "")),-which(colnames(working.table)%in%paste("X",org2,sep="",collapse = "")))]

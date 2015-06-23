@@ -1,7 +1,7 @@
 gen.pca<-function(df, legend, g.ids, sep, trim.names=20, var.axes=FALSE, scale.=FALSE, circle=TRUE, ...){
   check.ggbiplot.loaded()
   groups<-clip.legend(row.names(df),g.ids = g.ids,legend = legend,sep = sep)
-  colnames(df)<-legend$name
+  colnames(df)<-filter(legend,!id_genomes %in% g.ids)$name
   g<-nice.pca(df = df,legend = legend, groups = groups, var.axes = var.axes, scale. = scale., circle = circle, ... )
   return(g)
 }

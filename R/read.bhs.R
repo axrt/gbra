@@ -11,7 +11,7 @@
 #' 
 read.bhs<-function(bh.folder, ext=".short", sep="_", bit.score.cutoff=80){
   
-  bh.files<-list.files(path = bh.folder, pattern = ext)
+  bh.files<-list.files(path = bh.folder, pattern = ext, )
   genome.ids<-strsplit(x = bh.files, split = sep, fixed = TRUE)
   all.tables<-lapply(genome.ids, function(i){
     

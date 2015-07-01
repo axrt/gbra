@@ -1,3 +1,5 @@
+useDynLib(gbra)
+importFrom(Rcpp,evalCpp)
 export(gen.pca)
 export(color.clust)
 export(load.legend)

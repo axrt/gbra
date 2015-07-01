@@ -15,3 +15,4 @@ inline const double sumDist(const NumericMatrix& mtx, const NumericVector& gprim
 inline const NumericVector * diffDistRatio(const NumericVector& iv, const NumericVector& gprime);
 inline const NumericVector * diffDistInverse(const NumericVector& iv, const NumericVector& gprime);
 inline const double sumMatrix(const NumericMatrix&mtx);
+inline const double meanRow(const NumericVector& v);

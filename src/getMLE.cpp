@@ -12,6 +12,7 @@ RcppExport SEXP getMLE(SEXP mtx, SEXP steps, SEXP epsilon){
   const NumericVector * gprimePrior=E(mt);
   NumericVector * gprime= new NumericVector(*gprimePrior);
   delete gprimePrior;
+
   
   NumericMatrix track(stps,2);
   fillInMatrix(track,0);
@@ -81,8 +82,8 @@ inline const NumericVector * jitter(const NumericVector& nmv){
   NumericVector * jittered = new NumericVector(nmv.size());
   
   for(int i=0;i<nmv.size();i++){
-    const size_t d=(*jittered)[i]/10;
-    (*jittered)[i]=nmv[i]+(rand() % d)-d/2;
+    const size_t d=nmv[i]*10;
+    (*jittered)[i]=nmv[i]+(float)(rand() % d)/500-(float)d/1000;
   }
   
   return jittered;
@@ -91,12 +92,17 @@ inline const NumericVector * jitter(const NumericVector& nmv){
 inline const NumericVector * rowMeans (const NumericMatrix& mtx){
   
   NumericVector * rm=new NumericVector(mtx.nrow());
-  
+  NumericMatrix mt(mtx);
   for(int i=0;i<mtx.nrow();i++){
-    (*rm)[i] = mean(mtx[i]);
+    (*rm)[i] = meanRow(mt(i,_));
   }
   
   return rm;
+}
+
+inline const double meanRow(const NumericVector& v){
+  const double su=std::accumulate(v.begin(),v.end(),0.0);
+  return su/v.size();
 }
 
 inline const double mean(const NumericVector& nmv){

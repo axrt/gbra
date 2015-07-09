@@ -7,7 +7,7 @@ select.row<-function(name,g.ids,sep){
   }
 }
 
-select.genomes<-function(df,g.ids,sep){
+select.genomes<-function(df,g.ids,sep="X"){
   return(df[sapply(row.names(df),select.row,g.ids,sep),])
 }
 

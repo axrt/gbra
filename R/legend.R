@@ -1,5 +1,5 @@
-load.legend<-function(legend.file){
-  legend<-read.table(file = legend.file, header = TRUE, sep=",")
-  legend<-data.frame(name=legend$name,id_genomes=legend$id_genomes)
+load.legend<-function(legend.file,sep=","){
+  legend<-read.table(file = legend.file, header = FALSE, sep=sep)
+  legend<-data.frame(name=legend[,2],id_genomes=legend[,1])
   return(legend)
 }

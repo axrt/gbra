@@ -11,13 +11,13 @@
 #' 
 read.bhs<-function(bh.folder, ext=".short", sep="_", bit.score.cutoff=80){
   
-  bh.files<-list.files(path = bh.folder, pattern = ext, )
+  bh.files<-list.files(path = bh.folder, pattern = ext, full.names = TRUE)
   genome.ids<-strsplit(x = bh.files, split = sep, fixed = TRUE)
   all.tables<-lapply(genome.ids, function(i){
     
-    return(read.bh.file(qgen.id=i[1], tgen.id=i[3],bh.folder=bh.folder,bit.score.cutoff=bit.score.cutoff))
+    return(read.bh.file(qgen.id=i[1], tgen.id=i[3], bh.folder=bh.folder, bit.score.cutoff=bit.score.cutoff))
     })
-  bh.table<-rbind_all(all.tables) %>% spread(ID_TARGET_GENOME,COMULATIVE_BITSCORE,fill = 0)
+  bh.table<-rbind_all(all.tables) %>% spread(ID_TARGET_GENOME, COMULATIVE_BITSCORE, fill = 0)
   return(bh.table)
   
 }

@@ -1,4 +1,4 @@
-color.clust<-function(gen.hclust, g.ids, colors, sep){
+color.clust<-function(gen.hclust, g.ids, colors, sep="X"){
   dnd<-as.dendrogram(object = gen.hclust)
   dnd<-dendrapply(X = dnd,FUN = color.dnd, g.ids, colors, sep)
   return(dnd)

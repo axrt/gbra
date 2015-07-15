@@ -1,4 +1,4 @@
-#' Reads best hit files from the given folder and extracts a hit matrix (non-normalized)
+ #' Reads best hit files from the given folder and extracts a hit matrix (non-normalized)
 #' 
 #' @param \code{bh.folder} that contains the shortened bh files
 #' @param \code{ext} shortened files extension, default ".short"

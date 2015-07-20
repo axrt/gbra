@@ -1,28 +1,54 @@
 #include <Rcpp.h>
 #include <math.h>
+#include <algorithm> 
 using namespace Rcpp;
 
-inline static const bool greater(double a, double b){
-  return a <= b;
+struct val_rank{
+  double val;
+  double rank;
+};
+
+static bool greater(val_rank& a, val_rank& b){
+  return a.val <= b.val;
 }
 
-inline static const std::vector<double> * ranks(std::vector<double> &sorted){
-  std::vector<double> * rank=new std::vector<double>(sorted.size());
- 
+inline const std::vector<double> * ranks(std::vector<val_rank&> &sorted){
+  
+  std::vector<double> * rank=new std::vector<double>();
+  
+   for(int i=0;i<sorted.size()-1;i++){
+   double r=i+1;
+   int c=i;
+   while(i<sorted.size()-1){
+     if(sorted.at(i).val!=sorted.at(i+1).val){
+       if(i+1==sorted.size()-1){
+         rank->push_back(sorted.at(i+1).rank);
+       }
+       break;
+     }
+     r+=sorted.at(i).rank;
+     i++;
+   }
+   int diff=i-c+1;
+     r=r/diff;
+     for(int j=0;j<diff;j++){
+       rank->push_back(r);
+   }
+  }
   return rank;
 } 
 
-inline static const double spearmanRho(std::vector<double> &x, std::vector<double> &y){
-  
-  std::sort(x.begin(), x.end(), greater);
-  std::sort(y.begin(), y.end(), greater);
+inline const double spearmanRho(std::vector<val_rank&> &x, std::vector<val_rank&> &y){
+
+  std::stable_sort(x.begin(), x.end(), greater);
+  std::stable_sort(y.begin(), y.end(), greater);
   
   const std::vector<double> * xr=ranks(x);
   const std::vector<double> * yr=ranks(y);
   
   std::vector<double> ds;
   for(int i=0;i<xr->size();i++){
-    ds.push_back(pow((*xr)[i]-(*yr)[i],2));
+    ds.push_back(pow(xr->at(i)-yr->at(i),2));
   }
   delete xr;
   delete yr;
@@ -30,7 +56,7 @@ inline static const double spearmanRho(std::vector<double> &x, std::vector<doubl
   const double nsquared=pow(ds.size(),2);
   
   const double rho = 1-(6*dsqareds)/(ds.size()*(nsquared-1));  
-  return(rho);
+  return rho;
 }
 
 // [[Rcpp::export]]
@@ -46,10 +72,20 @@ RcppExport SEXP spearmanDist(SEXP mtx){
        if(i==j){
          distMatrix(i,j)=1;
        }else{
-         NumericVector nx=(mt(i,_));
-         std::vector<double> x =Rcpp::as<std::vector<double> >(nx);
-         NumericVector ny=mt(j,_);
-         std::vector<double> y =Rcpp::as<std::vector<double> >(ny);
+         std::vector<val_rank&> x;
+         for(int k=0;k<mt.ncol();k++){
+           val_rank d;
+           d.val=mt(i,k);
+           d.rank=0;
+           x.push_back(d);
+         }
+         std::vector<val_rank&> y;
+         for(int k=0;k<mt.ncol();k++){
+           val_rank d;
+           d.val=mt(i,k);
+           d.rank=0;
+           y.push_back(d);
+         }
          const double rho=spearmanRho(x, y);
          distMatrix(i,j)=rho;
          distMatrix(j,i)=rho;  

@@ -113,6 +113,10 @@ RcppExport SEXP spearmanDist(SEXP mtx){
            y.push_back(d);
          }
          const double rho=spearmanRho(x, y);
+         for(int t=0;t<x.size();t++){
+           delete x.at(t);
+           delete y.at(t);
+         }
          distMatrix(i,j)=rho;
          distMatrix(j,i)=rho;  
        }      

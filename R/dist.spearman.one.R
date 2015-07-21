@@ -16,5 +16,7 @@ dist.spearman.one<-function(df){
   
   m<-as.matrix(df)
   m.dist<-.Call("spearmanDist",m,"gbra")
+  rownames(m.dist)<-rownames(df)
+  colnames(m.dist)<-rownames(df)
   return(as.dist(m.dist))
 }

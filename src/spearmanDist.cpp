@@ -50,26 +50,26 @@ inline std::vector<val_rank*> &ranks(std::vector<val_rank*> &sorted){
 } 
 
 inline const double spearmanRho(std::vector<val_rank*> &x, std::vector<val_rank*> &y){
-
-  std::stable_sort(x.begin(), x.end(), greater);
-  std::stable_sort(y.begin(), y.end(), greater);
   
-  std::vector<val_rank*>& xr=ranks(x);
-  std::vector<val_rank*>& yr=ranks(y);
+  std::vector<val_rank*> xs(x);
+  std::vector<val_rank*> ys(y);
   
-  std::stable_sort(xr.begin(), xr.end(), initialOrder);
-  std::stable_sort(yr.begin(), yr.end(), initialOrder);
+  std::stable_sort(xs.begin(), xs.end(), greater);
+  std::stable_sort(ys.begin(), ys.end(), greater);
   
-  const double meanX=meanOfRanks(xr);
-  const double meanY=meanOfRanks(yr);
+  ranks(xs);
+  ranks(ys);
+  
+  const double meanX=meanOfRanks(x);
+  const double meanY=meanOfRanks(y);
   
   std::vector<double> ds;
   std::vector<double> dsqx;
   std::vector<double> dsqy;
   
-  for(int i=0;i<xr.size();i++){
-    const double xi=xr.at(i)->rank-meanX;
-    const double yi=yr.at(i)->rank-meanY;
+  for(int i=0;i<x.size();i++){
+    const double xi=x.at(i)->rank-meanX;
+    const double yi=y.at(i)->rank-meanY;
     ds.push_back(xi*yi);
     dsqx.push_back(pow(xi,2));
     dsqy.push_back(pow(yi,2));
@@ -88,39 +88,47 @@ RcppExport SEXP spearmanDist(SEXP mtx){
   
   NumericMatrix mt(mtx);
   const int nrow=mt.nrow();
+  const int ncol=mt.ncol();
   
   NumericMatrix distMatrix(nrow,nrow);
- 
+  
+  std::vector<val_rank*> x;
+  std::vector<val_rank*> y;
+  for(int i=0;i<ncol;i++){
+    val_rank * dx=new val_rank;
+    x.push_back(dx);
+    val_rank * dy=new val_rank;
+    y.push_back(dy);
+  }
+  
   for(int i=0; i<nrow; i++){
     for(int j=i; j<nrow; j++){
        if(i==j){
          distMatrix(i,j)=1;
        }else{
-         std::vector<val_rank*> x;
-         for(int k=0;k<mt.ncol();k++){
-           val_rank * d=new val_rank;
-           d->number=k;
-           d->val=mt(i,k);
-           d->rank=0;
-           x.push_back(d);
+         
+         for(int k=0;k<ncol;k++){
+           val_rank * dx = x.at(k);
+           dx->number=k;
+           dx->val=mt(i,k);
+           dx->rank=0;
          }
-         std::vector<val_rank*> y;
-         for(int k=0;k<mt.ncol();k++){
-           val_rank * d=new val_rank;
-           d->number=k;
-           d->val=mt(j,k);
-           d->rank=0;
-           y.push_back(d);
+         
+         for(int k=0;k<ncol;k++){
+           val_rank * dy = y.at(k);
+           dy->number=k;
+           dy->val=mt(j,k);
+           dy->rank=0;
          }
          const double rho=spearmanRho(x, y);
-         for(int t=0;t<x.size();t++){
-           delete x.at(t);
-           delete y.at(t);
-         }
          distMatrix(i,j)=rho;
          distMatrix(j,i)=rho;  
        }      
     }
+  }
+  for(int i=0;i<ncol;i++){
+    delete x.at(i);
+    delete y.at(i);
   }
   
   return wrap(distMatrix);

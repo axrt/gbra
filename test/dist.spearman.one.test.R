@@ -14,5 +14,6 @@ system.time(
 
 
 data.spe<-as.matrix(data.spe)
+head(data.spe)
 ncol(data.spe)
 nrow(data.spe)

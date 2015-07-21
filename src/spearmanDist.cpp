@@ -54,29 +54,11 @@ inline const double spearmanRho(std::vector<val_rank*> &x, std::vector<val_rank*
   std::stable_sort(x.begin(), x.end(), greater);
   std::stable_sort(y.begin(), y.end(), greater);
   
-  for(int i=0;i<x.size();i++){
-   Rcout<<x.at(i)->number<<'\t'<<x.at(i)->rank<<'\t'<<x.at(i)->val<<std::endl;  
-  }
-  Rcout<<std::endl;
-  Rcout<<std::endl;
-  
   std::vector<val_rank*>& xr=ranks(x);
   std::vector<val_rank*>& yr=ranks(y);
   
-  for(int i=0;i<xr.size();i++){
-    Rcout<<xr.at(i)->number<<'\t'<<xr.at(i)->rank<<'\t'<<xr.at(i)->val<<std::endl;  
-  }
-  Rcout<<std::endl;
-  Rcout<<std::endl;
-  
   std::stable_sort(xr.begin(), xr.end(), initialOrder);
   std::stable_sort(yr.begin(), yr.end(), initialOrder);
-  
-  for(int i=0;i<xr.size();i++){
-    Rcout<<xr.at(i)->number<<'\t'<<xr.at(i)->rank<<'\t'<<xr.at(i)->val<<std::endl;  
-  }
-  Rcout<<std::endl;
-  Rcout<<std::endl;
   
   const double meanX=meanOfRanks(xr);
   const double meanY=meanOfRanks(yr);
@@ -84,6 +66,7 @@ inline const double spearmanRho(std::vector<val_rank*> &x, std::vector<val_rank*
   std::vector<double> ds;
   std::vector<double> dsqx;
   std::vector<double> dsqy;
+  
   for(int i=0;i<xr.size();i++){
     const double xi=xr.at(i)->rank-meanX;
     const double yi=yr.at(i)->rank-meanY;
@@ -97,7 +80,7 @@ inline const double spearmanRho(std::vector<val_rank*> &x, std::vector<val_rank*
   const double denominator=sqrt(dsqsumx*dsqsumy);
   
   const double rho = dsum/denominator;  
-  return rho;
+  return 1-rho; //cuz that's the distance in fact
 }
 
 // [[Rcpp::export]]

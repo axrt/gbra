@@ -14,6 +14,7 @@ system.time(
 
 
 data.spe<-as.matrix(data.spe)
+data.spe[1:3,1:3]
 head(data.spe)
 ncol(data.spe)
 nrow(data.spe)

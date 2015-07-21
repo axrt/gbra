@@ -13,7 +13,7 @@
 #'  sign.bh.table()
 #' data.3.6<-select.genomes(df = bh.data,g.ids = c(3,6))
 dist.spearman.one<-function(df){
-  
+
   m<-as.matrix(df)
   m.dist<-.Call("spearmanDist",m,"gbra")
   rownames(m.dist)<-rownames(df)

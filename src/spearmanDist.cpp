@@ -9,11 +9,19 @@ struct val_rank{
   double rank;
 };
 
-static bool greater(val_rank* a, val_rank* b){
+inline const double meanOfRanks(std::vector<val_rank*>&vec){
+  int ra=0;
+  for(int i=0;i<vec.size();i++){
+    ra+=vec.at(i)->rank;
+  }
+  return ra/vec.size();
+}
+
+inline const bool greater(val_rank* a, val_rank* b){
   return a->val <= b->val;
 }
 
-static bool initialOrder(val_rank* a, val_rank* b){
+inline const bool initialOrder(val_rank* a, val_rank* b){
   return a->number <= b->number;
 }
 
@@ -25,11 +33,11 @@ inline std::vector<val_rank*> &ranks(std::vector<val_rank*> &sorted){
    while(i<sorted.size()-1){
      if(sorted.at(i)->val!=sorted.at(i+1)->val){
        if(i+1==sorted.size()-1){
-         sorted.at(i+1)->rank=i+1;
+         sorted.at(i+1)->rank=i+2;
        }
        break;
      }
-     r+=i;
+     r+=i+2;
      i++;
    }
    int diff=i-c+1;
@@ -70,15 +78,25 @@ inline const double spearmanRho(std::vector<val_rank*> &x, std::vector<val_rank*
   Rcout<<std::endl;
   Rcout<<std::endl;
   
+  const double meanX=meanOfRanks(xr);
+  const double meanY=meanOfRanks(yr);
+  
   std::vector<double> ds;
+  std::vector<double> dsqx;
+  std::vector<double> dsqy;
   for(int i=0;i<xr.size();i++){
-    ds.push_back(pow(xr.at(i)->rank-yr.at(i)->rank,2));
+    const double xi=xr.at(i)->rank-meanX;
+    const double yi=yr.at(i)->rank-meanY;
+    ds.push_back(xi*yi);
+    dsqx.push_back(pow(xi,2));
+    dsqy.push_back(pow(yi,2));
   }
+  const double dsum=std::accumulate(ds.begin(),ds.end(),0);
+  const double dsqsumx=std::accumulate(dsqx.begin(),dsqx.end(),0);
+  const double dsqsumy=std::accumulate(dsqy.begin(),dsqy.end(),0);
+  const double denominator=sqrt(dsqsumx*dsqsumy);
   
-  const double dsqareds=std::accumulate(ds.begin(),ds.end(),0);
-  const double nsquared=pow(ds.size(),2);
-  
-  const double rho = 1-(6*dsqareds)/(ds.size()*(nsquared-1));  
+  const double rho = dsum/denominator;  
   return rho;
 }
 

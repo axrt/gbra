@@ -10,9 +10,9 @@ logreg.mismatch.genes(data, org1, org2, num.bootstraps = 0, num.cpu = 1,
 \arguments{
 \item{\code{data}}{a "coocked" data frame where colnames are as follows: X1..Xn, where n is the ids of genomes, rownames are: 1X0..mXn, where m is the largest orf_id}
 
-\item{\code{org1}}{character name of the genome 1 (eg. X1)}
+\item{\code{org1}}{character name of the genome 1 (eg. 1)}
 
-\item{\code{org2}}{character name of the genome 2 (eg. X2)}
+\item{\code{org2}}{character name of the genome 2 (eg. 2)}
 
 \item{\code{num.bootstraps}}{number of bootstraps to run, default is 0, which means "do not run"}
 

@@ -1,7 +1,7 @@
 #' Use to fit and minimize a logistic regeration model given the \code{data} and the \code{part} that will be used to train, \code{1-part} to predict and evaluate the model
 #' @param \code{data} a "coocked" data frame where colnames are as follows: X1..Xn, where n is the ids of genomes, rownames are: 1X0..mXn, where m is the largest orf_id
-#' @param \code{org1} character name of the genome 1 (eg. X1)
-#' @param \code{org2} character name of the genome 2 (eg. X2)
+#' @param \code{org1} character name of the genome 1 (eg. 1)
+#' @param \code{org2} character name of the genome 2 (eg. 2)
 #' @param \code{num.bootstraps} number of bootstraps to run, default is 0, which means "do not run"
 #' @param \code{num.cpu} number of cores to use for bootstrap, default is 1, makes sence only if \code{num.bootstraps} >0
 #' @param \code{cut} probaility cut that allows to send a point either ot cluster 1 or cluster 2, defualt is 50%/50%, 0.5
@@ -24,11 +24,11 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   }
   #implement checks later
   #select the part that belongs to org1 or org2
-  working.table<-data[grepl(pattern = paste("\\b[",org1,",",org2,"]X",sep = "",collapse = ""),x = rownames(data),perl = TRUE),]
+  working.table<-data[grepl(pattern = paste("\\b(",org1,"|",org2,")X",sep = "",collapse = ""),x = rownames(data),perl = TRUE),]
   #remove the colums coming from org1 or org2
   working.table<-working.table[,c(-which(colnames(working.table)%in%paste("X",org1,sep="",collapse = "")),-which(colnames(working.table)%in%paste("X",org2,sep="",collapse = "")))]
   #add a new column that indicates if a row comes from org1 (FALSE) or org2 (TRUE)
-  working.table$cluster<-grepl(pattern = paste("\\b[",org2,"]X",sep = "",collapse = ""),x = rownames(working.table),perl = TRUE)
+  working.table$cluster<-grepl(pattern = paste("\\b",org2,"X",sep = "",collapse = ""),x = rownames(working.table),perl = TRUE)
   
   #assemble a formula for the model
   f<-paste("cluster ~",paste(colnames(working.table[1:ncol(working.table)-1]),collapse = "+"))

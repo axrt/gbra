@@ -1,4 +1,8 @@
 gen.pca<-function(df, legend, g.ids, sep="X", trim.names=20, var.axes=FALSE, scale.=FALSE, circle=TRUE, ...){
+  restrict.ids<-sapply(g.ids,function(i){
+    return(paste(sep,i,sep=""))
+  })
+  df<-df[,!colnames(df)%in%restrict.ids]
   check.ggbiplot.loaded()
   groups<-clip.legend(row.names(df),g.ids = g.ids,legend = legend,sep = sep)
   colnames(df)<-filter(legend,!id_genomes %in% g.ids)$name

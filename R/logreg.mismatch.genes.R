@@ -51,7 +51,9 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   #calculate the R^2 of the model
   r.squared=1-logLik(glm.fit)/logLik(null.fit)
   print(paste("R squared:",r.squared))
-  
+  if(r.squared==0){
+    return(list(train.data=working.table.sample, working.data=working.table.rest,fit=glm.fit, mismatch=data.frame(),Rsq=r.squared))
+  }
   if(num.bootstraps>0){
    require(boot)
    message("Bootstrapping model ...")

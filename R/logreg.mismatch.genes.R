@@ -85,7 +85,7 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   #get the return list
   out.list<-list(train.data=working.table.sample, working.data=working.table.rest,fit=glm.fit, mismatch=cross.mismatch[,1:2], Rsq=r.squared)
   if(num.bootstraps>0){
-    out.list<-c(out.list,boot=glm.fit)
+    out.list<-c(out.list,boot=glm.boot)
   }
   return(out.list)
 }

@@ -5,7 +5,7 @@
 \title{Use to fit and minimize a logistic regeration model given the \code{data} and the \code{part} that will be used to train, \code{1-part} to predict and evaluate the model}
 \usage{
 logreg.mismatch.genes(data, org1, org2, num.bootstraps = 0, num.cpu = 1,
-  cut = 0.5, part = 0.75)
+  cut = 0.5, part = 0.75, keep.model = FALSE)
 }
 \arguments{
 \item{\code{data}}{a "coocked" data frame where colnames are as follows: X1..Xn, where n is the ids of genomes, rownames are: 1X0..mXn, where m is the largest orf_id}

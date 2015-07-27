@@ -18,7 +18,7 @@
 #' sign.bh.table()
 #' 
 #' logreg.mismatch.genes(data = bh.data, org1 = "3", org2 = "6",part = 0.75)
-logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, cut=0.5, part=0.75){
+logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, cut=0.5, part=0.75, keep.model=FALSE){
   if(!require("boot")){
     install.packages("boot")
   }
@@ -38,7 +38,7 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   #randomly select a part of the data
   working.table.sample<-sample.data(data = working.table,part = part)
   #construct model
-  glm.fit<-glm(formula = f, data=working.table.sample, family="binomial")
+  glm.fit<-glm(formula = f, data=working.table.sample, family="binomial",model = keep.model)
   #report summary
   print(summary(glm.fit))
   message("Reducing Model ...")
@@ -51,6 +51,8 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   #calculate the R^2 of the model
   r.squared=1-logLik(glm.fit)/logLik(null.fit)
   print(paste("R squared:",r.squared))
+  #get the rest of the data
+  working.table.rest<-working.table[setdiff(rownames(working.table),rownames(working.table.sample)),]
   if(r.squared==0){
     return(list(train.data=working.table.sample, working.data=working.table.rest,fit=glm.fit, mismatch=data.frame(),Rsq=r.squared))
   }
@@ -60,9 +62,6 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
    glm.boot<-boot(working.table,logreg.model.bootstrap,R=num.bootstraps,formula=glm.fit$formula, parallel = "multicore", ncpus = num.cpu)
    print(glm.boot)
   }
-  
-  #get the rest of the data
-  working.table.rest<-working.table[setdiff(rownames(working.table),rownames(working.table.sample)),]
   #predict the rest of the data
   glm.probs<-predict(glm.fit,working.table.rest,type = "response")
   #assign a row to either one, or other cluster

@@ -1,4 +1,4 @@
-model.ratio.table<-function(model,predict.data){
+model.ratio.table<-function(model,predict.data, cut=0.5){
   #predict the rest of the data
   glm.probs<-predict(model,predict.data,type = "response")
   #assign a row to either one, or other cluster

@@ -32,7 +32,7 @@ write.fitch<-function(dist.mtx, file){
   #open connection to the same file, but in append this time as we need to keep the previous line
   fileConn<-file(file,open = "at")
   #write each line in a specified with two spaces between columns weird format
-  for(i in 1:nrow(genome.mle.dist)){
+  for(i in 1:nrow(dist.mtx)){
     writeLines(text=paste0(rownames(dist.mtx)[i],paste(dist.mtx[i,], collapse = "  ")), con = fileConn, sep="\n")
   }
   close(fileConn)

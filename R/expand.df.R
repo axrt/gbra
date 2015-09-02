@@ -10,10 +10,10 @@ expand.df<- function(short.df, sep="X"){
   short.df.rownames<- rownames(short.df)
   short.df.names.split<- strsplit(x = short.df.rownames,split = sep, fixed = TRUE)
   short.df$QUERY_ORF_ID<- as.numeric(sapply(short.df.names.split, function(x){
-    return(x[[1]][2])
+    return(x[[2]])
   }))
   short.df$ID_QUERY_GENOME<-as.numeric(sapply(short.df.names.split, function(x){
-    return(x[[1]][1])
+    return(x[[1]])
   }))
   short.df<- short.df[,c("ID_QUERY_GENOME","QUERY_ORF_ID",short.df.colnames)]
   return(short.df)

@@ -3,9 +3,10 @@
 #'@param \code{project.name} a mandatory for the iTOL service project name
 #'@param \code{output.file} a file to save the output pdf
 #'@param \code{format} output format, may be pdf, png, eps, the default is pdf
+#'@param \code{font.size} the size of the font used for outplot, default is 48
 #'@return output file name for the generated pdf
 #'@examples
-plot.itol<- function(newick.file, project.name="Default", output.file, format=".pdf"){
+plot.itol<- function(newick.file, project.name="Default", output.file, format=".pdf", font.size=48){
   #request
   req<-POST(url = "http://itol.embl.de/batch_uploader.cgi",
             encode = "multipart", body=list(
@@ -22,7 +23,7 @@ plot.itol<- function(newick.file, project.name="Default", output.file, format=".
              format=format,#we want it in pdf
              displayMode="unrooted",#we want it in circular and unrooted
              resolution=300,#print resolution, makes no sence for a vector pdf file, but there might ne smth like fonts for internal nodes, that get rasterized
-             fontSize=48,#this one is the highest number of the font size, otherwise the letters start to overlap
+             fontSize=font.size,#this one is the highest number of the font size, otherwise the letters start to overlap
              lineWidth=1,#this is the line stoke, enough to reflect nicely
              hideRanges=0,#we do not have any ranges here, so it is good idea to switch this off
              scaleFactor=0.8#this is the minimum scaling factor, if made smaller, the words begin to overlap (scaling here is the width of the plot if looked at horyzontally)

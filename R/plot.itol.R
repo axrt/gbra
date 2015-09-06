@@ -2,9 +2,10 @@
 #'@param \code{newick.file} a newick-formatted file
 #'@param \code{project.name} a mandatory for the iTOL service project name
 #'@param \code{output.file} a file to save the output pdf
-#'@retrn output file name for the generated pdf
+#'@param \code{format} output format, may be pdf, png, eps, the default is pdf
+#'@return output file name for the generated pdf
 #'@examples
-plot.itol<- function(newick.file, project.name="Default", output.file){
+plot.itol<- function(newick.file, project.name="Default", output.file, format=".pdf"){
   #request
   req<-POST(url = "http://itol.embl.de/batch_uploader.cgi",
             encode = "multipart", body=list(
@@ -18,7 +19,7 @@ plot.itol<- function(newick.file, project.name="Default", output.file){
   pl<-POST(url = "http://itol.embl.de/batch_downloader.cgi",
            encode = "multipart", body=list(
              tree= id,
-             format="pdf",#we want it in pdf
+             format=format,#we want it in pdf
              displayMode="unrooted",#we want it in circular and unrooted
              resolution=300,#print resolution, makes no sence for a vector pdf file, but there might ne smth like fonts for internal nodes, that get rasterized
              fontSize=48,#this one is the highest number of the font size, otherwise the letters start to overlap

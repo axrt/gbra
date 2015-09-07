@@ -6,7 +6,7 @@
 #'@param \code{font.size} the size of the font used for outplot, default is 48
 #'@return output file name for the generated pdf
 #'@examples
-plot.itol<- function(newick.file, project.name="Default", output.file, format=".pdf", font.size=48){
+plot.itol<- function(newick.file, project.name="Default", output.file, format="pdf", font.size=48){
   #request
   req<-POST(url = "http://itol.embl.de/batch_uploader.cgi",
             encode = "multipart", body=list(

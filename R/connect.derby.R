@@ -34,7 +34,7 @@ save.legend<-function(conn, out.file){
     install.packages("dplyr")
   }
   legend<-dbGetQuery(conn, "select * from genomes")
-  legend<- legend %>% select(ID_GENOMES,NAME)
+  legend<- legend %>% select(ID_GENOME,NAME)
   write.table(legend, file = out.file, quote = FALSE, sep = "\t", row.names = FALSE)
   return(legend)
 }

@@ -18,7 +18,7 @@
 #' sign.bh.table()
 #' 
 #' logreg.mismatch.genes(data = bh.data, org1 = "3", org2 = "6",part = 0.75)
-logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, cut=0.5, part=0.75, keep.mod=FALSE){
+logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, cut=0.5, part=0.75, keep.mod=FALSE, do.step=TRUE){
   if(!require("boot")){
     install.packages("boot")
   }
@@ -41,11 +41,13 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   glm.fit<-glm(formula = f, data=working.table.sample, family="binomial")
   #report summary
   print(summary(glm.fit))
-  message("Reducing Model ...")
-  #step-reduce the model
-  glm.fit<-step(glm.fit)
-  #report the reduced model
-  print(summary(glm.fit))
+  if(do.step){
+    message("Reducing Model ...")
+    #step-reduce the model
+    glm.fit<-step(glm.fit)
+    #report the reduced model
+    print(summary(glm.fit))
+  }
   #creat the null fit
   null.fit<-glm(formula = "cluster ~ 1", data = working.table.sample, family="binomial")
   #calculate the R^2 of the model

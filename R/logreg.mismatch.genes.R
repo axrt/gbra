@@ -44,7 +44,7 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   if(do.step){
     message("Reducing Model ...")
     #step-reduce the model
-    glm.fit<-step(glm.fit, direction = "both")
+    glm.fit<<-step(glm.fit, direction = "both")
     #report the reduced model
     print(summary(glm.fit))
   }

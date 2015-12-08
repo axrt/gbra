@@ -6,6 +6,8 @@
 #' @param \code{num.cpu} number of cores to use for bootstrap, default is 1, makes sence only if \code{num.bootstraps} >0
 #' @param \code{cut} probaility cut that allows to send a point either ot cluster 1 or cluster 2, defualt is 50%/50%, 0.5
 #' @param \code{part} of the data to train the model, default is 0.75 (75%), leaving 0.25 to predict and evaluate the model
+#' @param \code{do.step} should the step model simplification be performed? default is TRUE
+#' @param \code{direction} the step direction, default is "both"
 #' @return a \code{list} train.data: a data.frame the was used to train the model,
 #' working.data: a data.frame that was used to evaluate the model, fit: fitted and reduced minimal model itself, mismatch: a table of points that do not match clusters by the
 #' perdiction, Rsq: r.squared of the model; in case \code{num.bootstraps}>0, the bootstrapped model also gets returned
@@ -18,7 +20,7 @@
 #' sign.bh.table()
 #' 
 #' logreg.mismatch.genes(data = bh.data, org1 = "3", org2 = "6",part = 0.75)
-logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, cut=0.5, part=0.75, keep.mod=FALSE, do.step=TRUE){
+logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, cut=0.5, part=0.75, keep.mod=FALSE, do.step=TRUE, direction="both"){
   if(!require("boot")){
     install.packages("boot")
   }
@@ -44,7 +46,7 @@ logreg.mismatch.genes<-function(data, org1, org2, num.bootstraps=0, num.cpu=1, c
   if(do.step){
     message("Reducing Model ...")
     #step-reduce the model
-    glm.fit<<-step(glm.fit, direction = "both")
+    glm.fit<-step(glm.fit, direction = direction)
     #report the reduced model
     print(summary(glm.fit))
   }

@@ -3,8 +3,8 @@
 #' @param \code{org1} character name of the genome 1 (eg. 1)
 #' @param \code{org2} character name of the genome 2 (eg. 2)
 #' @param \code{num.bootstraps} number of bootstraps to run, default is 0, which means "do not run"
-#' @param \code{num.cpu} number of cores to use for bootstrap, default is 1, makes sence only if \code{num.bootstraps} >0
-#' @param \code{cut} probaility cut that allows to send a point either ot cluster 1 or cluster 2, defualt is 50%/50%, 0.5
+#' @param \code{num.cpu} number of cores to use for bootstrap, default is 1, makes sense only if \code{num.bootstraps} >0
+#' @param \code{cut} probaility cut that allows to send a point either to cluster 1 or cluster 2, defualt is 50%/50%, 0.5
 #' @param \code{part} of the data to train the model, default is 0.75 (75%), leaving 0.25 to predict and evaluate the model
 #' @param \code{do.step} should the step model simplification be performed? default is TRUE
 #' @param \code{direction} the step direction, default is "both"

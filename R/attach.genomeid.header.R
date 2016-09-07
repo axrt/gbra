@@ -10,7 +10,11 @@
 #' 
 attach.genomeid.header<-function(df, sep="X"){
   
-  colnames(df)<-sapply(colnames(df),function(i){return(paste(sep,i,sep=""))})
+  colnames(df)<-sapply(colnames(df),function(i){
+    return(
+      paste0(sep,i)
+      )
+    })
   
   return(df)
 }

@@ -1,6 +1,6 @@
 source("../R/read.bh.R")
 
-test_that("loading a bh data sample file results in what we expet it to..", {
+test_that("Loading a bh data sample file results in what we expet it to..", {
   #get some sample data
   test.bh.data <- read.bh.file(qgen.id = 6,
                                tgen.id = 3,

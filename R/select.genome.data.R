@@ -1,12 +1,18 @@
-#'
+#'Use this to select 
 #'todo: document
-select.genome.data<- function(data, orgs){
+select.genome.data<- function(data, orgs, exclude=TRUE){
   
-  to.exclude<- -which(colnames(data)%in% sapply(orgs, function(x){
-   return(
-           paste("X",x,sep="", collapse = "")
-         )
+  ids<- which(colnames(data)%in% sapply(orgs, function(x){
+    return(
+      paste("X",x,sep="", collapse = "")
+    )
   })
   )
-  return(data[,to.exclude,drop=FALSE])
+  
+  if(exclude){
+    return(data[,-ids,drop=FALSE])
+  }else{
+    return(data[,ids,drop=FALSE])
+  }
+  
 }

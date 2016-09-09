@@ -13,10 +13,15 @@ sample.data<-function(data, part=0.75){
     install.packages("dplyr")
     library("dplyr")
   }
-  sampled.data<-data %>%mutate(names=rownames(data)) %>% group_by(cluster) %>% do({
+  sampled.data<-data %>%
+    mutate(names=rownames(data)) %>% 
+    group_by(cluster) %>% 
+    do({
     .[sample(x = nrow(.),size = nrow(.)*part,replace = FALSE),]
     })
   rownames(sampled.data)<-sampled.data$names
-  sampled.data<-select(sampled.data,-c(names))
-  return(sampled.data)
+  
+  return(
+    select(sampled.data,-c(names))
+  )
 }
